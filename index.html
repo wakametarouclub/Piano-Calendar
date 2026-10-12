@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ピアノの練習記録</title>
+<style>
+/* 色と共通の余白 */
+:root{color-scheme:light dark;--bg:#fff;--panel:#fff;--ink:#232838;--line:#e1e4eb;--soft:#f5f6fa;--accent:#2f3f87;--red:#c0494b;--blue:#3a6ea8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}button,textarea{font:inherit}button{min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--accent);padding:8px 16px;cursor:pointer}button:hover{background:var(--soft)}button:focus-visible,textarea:focus-visible{outline:3px solid var(--blue);outline-offset:3px}button:disabled{opacity:.4;cursor:default}
+header{background:var(--bg);z-index:2;padding:24px 16px 16px} .toolbar{max-width:1160px;margin:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}h1{font-size:25px;margin:0 auto 0 0;font-weight:600;font-variant-numeric:tabular-nums}main{max-width:1160px;margin:0 auto;padding:0 16px 24px}.switch{display:none}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-left:1px solid var(--line);border-top:1px solid var(--line)}.weekday{text-align:center;padding:12px 0;background:var(--soft);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+/* 同じ週は、もっとも内容が多いマスの高さにそろう */
+.day,.blank{min-height:112px;border:0;border-radius:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 10px;background:var(--panel)}.day{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;text-align:left;color:var(--ink)}.blank{background:var(--soft)}.date{position:relative;display:block;align-self:flex-start;isolation:isolate;min-width:30px;height:30px;line-height:30px;text-align:left;font-size:15px;font-variant-numeric:tabular-nums}.today .date{color:white}.today .date:before{content:"";position:absolute;z-index:-1;left:-6px;top:0;width:30px;height:30px;border-radius:50%;background:var(--accent)}.sun,.holiday{color:var(--red)}.sat{color:var(--blue)}
+ul{list-style:none;margin:12px 0 0;padding:0;font-size:14px;line-height:1.65}li{display:flex;align-items:flex-start;gap:3px}li+li{margin-top:7px}.bullet{flex:0 0 auto}.words{min-width:0;white-space:pre-wrap;word-break:auto-phrase;line-break:strict;overflow-wrap:break-word;text-wrap:pretty}.dot{display:none}.list{display:none}#notice{max-width:1160px;margin:0 auto;padding:0 16px;font-size:13px;color:var(--red)}#notice:empty{display:none}
+/* ダイアログはキーボードでも操作できる */
+dialog{width:min(520px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--panel);color:var(--ink)}dialog::backdrop{background:#11182b66}h2{font-size:20px;margin:0 0 24px}label{display:block;margin-bottom:8px}textarea{display:block;resize:vertical;width:100%;min-height:190px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}#save{background:var(--accent);color:#fff;border-color:var(--accent)}#remove{color:var(--red);margin-right:auto}#error{font-size:14px;color:var(--red);margin:10px 0 0}#error:empty{display:none}
+@media(prefers-color-scheme:dark){:root{--bg:#151822;--panel:#1d2230;--ink:#e5e7ef;--line:#363d50;--soft:#232939;--red:#e18486;--blue:#8bb3e2}button{color:#bcc8ff}}
+@media(max-width:599px){header{position:sticky;top:0;padding:calc(10px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 10px max(12px,env(safe-area-inset-left));border-bottom:1px solid var(--line)}h1{font-size:21px}.toolbar{gap:6px}.toolbar button{padding:8px 10px}.switch{display:flex;gap:8px;margin-top:12px}.switch button{flex:1}.switch [aria-pressed="true"]{background:var(--accent);color:#fff}main{padding:12px max(12px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}body[data-view="list"] .calendar{display:none}body[data-view="list"] .list{display:block}.list .day{width:100%;min-height:72px;flex-direction:row;gap:16px;border:0;border-bottom:1px solid var(--line);padding:16px 10px;scroll-margin-top:155px}.list .date{min-width:90px}.list ul{margin:2px 0 0;flex:1}.calendar .day,.calendar .blank{min-height:68px;padding:10px}.calendar ul{display:none}.dot{display:block;width:5px;height:5px;border-radius:50%;background:var(--accent);margin:6px 0 0 8px}dialog{margin:auto 0 0;width:100%;max-width:none;max-height:85dvh;border-radius:20px 20px 0 0;padding:24px max(20px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left))}}
+</style>
+</head>
+<body data-view="list">
+<header><div class="toolbar"><h1 id="month"></h1><button id="today">今日</button><button id="prev" aria-label="前の月">前の月</button><button id="next" aria-label="次の月">次の月</button></div><div class="switch"><button id="monthly" aria-pressed="false">月間</button><button id="listing" aria-pressed="true">リスト</button></div></header>
+<p id="notice" role="status"></p>
+<main><div id="calendar" class="calendar" aria-label="月間カレンダー"></div><div id="list" class="list" aria-label="日ごとの練習記録"></div></main>
+<dialog id="editor" aria-labelledby="editDate"><form id="form"><h2 id="editDate"></h2><label for="entry">予定</label><textarea id="entry"></textarea><p id="error" role="alert"></p><div class="actions"><button type="button" id="remove" hidden>削除</button><button type="submit" id="save">保存する</button><button type="button" id="close">閉じる</button></div></form></dialog>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const weekdays = ['日','月','火','水','木','金','土'];
+const key = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const shift = (d,n) => new Date(d.getFullYear(),d.getMonth(),d.getDate()+n,12);
+const cache = new Map();
+// 近似式の対応範囲に合わせて、1980～2099年を扱う。
+function holidays(year){
+ if(cache.has(year)) return cache.get(year);
+ const base = new Map();
+ const add = (m,d,name) => base.set(key(new Date(year,m-1,d,12)),name);
+ const monday = (m,n) => 1+(8-new Date(year,m-1,1,12).getDay())%7+7*(n-1);
+ add(1,1,'元日'); add(1,year>=2000?monday(1,2):15,'成人の日');
+ add(2,11,'建国記念の日');
+ if(year>=2020) add(2,23,'天皇誕生日');
+ if(year>=1989&&year<=2018) add(12,23,'天皇誕生日');
+ const equinox = (a) => Math.floor(a+0.242194*(year-1980)-Math.floor((year-1980)/4));
+ add(3,equinox(20.8431),'春分の日');
+ add(4,29,year<=1988?'天皇誕生日':year<=2006?'みどりの日':'昭和の日');
+ add(5,3,'憲法記念日');if(year>=2007)add(5,4,'みどりの日');add(5,5,'こどもの日');
+ if(year===2020){add(7,23,'海の日');add(7,24,'スポーツの日');add(8,10,'山の日');}
+ else if(year===2021){add(7,22,'海の日');add(7,23,'スポーツの日');add(8,8,'山の日');}
+ else{
+  if(year>=1996)add(7,year>=2003?monday(7,3):20,'海の日');
+  if(year>=2016)add(8,11,'山の日');
+  add(10,year>=2000?monday(10,2):10,year>=2020?'スポーツの日':'体育の日');
+ }
+ add(9,year>=2003?monday(9,3):15,'敬老の日');add(9,equinox(23.2488),'秋分の日');
+ add(11,3,'文化の日');add(11,23,'勤労感謝の日');
+ if(year===1989)add(2,24,'昭和天皇の大喪の礼');
+ if(year===1990)add(11,12,'即位礼正殿の儀');
+ if(year===1993)add(6,9,'皇太子徳仁親王の結婚の儀');
+ if(year===2019){add(5,1,'天皇の即位の日');add(10,22,'即位礼正殿の儀');}
+ const result = new Map(base);
+ // 国民の休日は、本来の祝日にはさまれた日から求める。
+ if(year>=1986)for(let d=new Date(year,0,2,12);d.getFullYear()===year;d=shift(d,1)){
+  if(d.getDay()!==0&&!base.has(key(d))&&base.has(key(shift(d,-1)))&&base.has(key(shift(d,1))))result.set(key(d),'国民の休日');
+ }
+ // 2007年以降は、祝日が続いていたらその先まで振り替える。
+ for(const date of [...base.keys()].sort()){
+  const d=new Date(date+'T12:00:00');if(d.getDay()!==0)continue;
+  let next=shift(d,1);
+  if(year>=2007)while(result.has(key(next)))next=shift(next,1);
+  if(!result.has(key(next)))result.set(key(next),'振替休日');
+ }
+ cache.set(year,result);return result;
+}
+// 1つの保存データに初回済みの印も入れ、削除後に再投入しない。
+const storageKey='piano-practice-v1';
+let records={'2026-10-01':'・ハノン\n・ジャズフレーズ','2026-10-02':'・バンド練\n・ジャズフレーズ2\n・依頼曲'};
+function persist(){
+ try{localStorage.setItem(storageKey,JSON.stringify({initialized:true,records}));$('notice').textContent='';}
+ catch{ $('notice').textContent='この環境では保存できません。記録はこの画面を閉じるまで保持します。'; }
+}
+try{
+ const raw=localStorage.getItem(storageKey);
+ if(raw===null){persist();}
+ else{
+  const saved=JSON.parse(raw);
+  if(!saved||saved.initialized!==true||!saved.records||typeof saved.records!=='object'||Array.isArray(saved.records))throw Error('invalid');
+  records=Object.fromEntries(Object.entries(saved.records).filter(([k,v])=>/^\d{4}-\d{2}-\d{2}$/.test(k)&&typeof v==='string'));
+ }
+}catch{ $('notice').textContent='保存データを読み込めません。この画面内で記録できます。'; }
+const now=new Date();
+let shown=new Date(Math.max(1980,Math.min(2099,now.getFullYear())),now.getMonth(),1,12);
+let selected='',opener=null,armed=false;
+const mobile=matchMedia('(max-width:599px)');
+function lines(text){return text.split(/\r?\n/).map(s=>s.trim().replace(/^・\s*/, '')).filter(Boolean);}
+function contents(text){
+ const ul=document.createElement('ul');
+ for(const line of lines(text)){
+  const li=document.createElement('li'),bullet=document.createElement('span'),words=document.createElement('span');
+  bullet.className='bullet';bullet.textContent='・';words.className='words';words.textContent=line;
+  li.append(bullet,words);ul.append(li);
+ }return ul;
+}
+function dayButton(d,isList){
+ const date=key(d),holiday=holidays(d.getFullYear()).get(date),b=document.createElement('button');
+ b.type='button';b.className='day';b.dataset.date=date;
+ if(date===key(new Date())){b.classList.add('today');b.setAttribute('aria-current','date');}
+ const number=document.createElement('span');number.className='date '+(holiday?'holiday':d.getDay()===0?'sun':d.getDay()===6?'sat':'');
+ number.textContent=isList?`${d.getDate()}日(${weekdays[d.getDay()]}${holiday?'・祝':''})`:d.getDate();
+ b.append(number);const text=records[date]||'';
+ if(lines(text).length){b.append(contents(text));if(!isList){const dot=document.createElement('span');dot.className='dot';b.append(dot);}}
+ b.setAttribute('aria-label',`${d.getMonth()+1}月${d.getDate()}日 ${weekdays[d.getDay()]}曜日${holiday?' '+holiday:''}${text?' '+lines(text).join('、'):' 記録なし'}`);
+ b.addEventListener('click',()=>openEditor(d,b));return b;
+}
+function scrollToday(){
+ if(mobile.matches&&document.body.dataset.view==='list')requestAnimationFrame(()=>{
+  const row=$('list').querySelector(`[data-date="${key(new Date())}"]`);
+  if(row){const top=row.getBoundingClientRect().top+window.scrollY-document.querySelector('header').offsetHeight-12;window.scrollTo({top:Math.max(0,top),behavior:'auto'});}
+ });
+}
+function render(scroll=false){
+ const y=shown.getFullYear(),m=shown.getMonth();$('month').textContent=`${y}年 ${m+1}月`;
+ $('prev').disabled=y===1980&&m===0;$('next').disabled=y===2099&&m===11;
+ $('calendar').replaceChildren();$('list').replaceChildren();
+ weekdays.forEach((w,i)=>{const e=document.createElement('div');e.className='weekday '+(i===0?'sun':i===6?'sat':'');e.textContent=w;$('calendar').append(e);});
+ const first=new Date(y,m,1,12).getDay(),count=new Date(y,m+1,0,12).getDate();
+ for(let i=0;i<Math.ceil((first+count)/7)*7;i++){
+  const n=i-first+1;
+  if(n<1||n>count){const e=document.createElement('div');e.className='blank';e.setAttribute('aria-hidden','true');$('calendar').append(e);}
+  else{const d=new Date(y,m,n,12);$('calendar').append(dayButton(d,false));$('list').append(dayButton(d,true));}
+ }if(scroll)scrollToday();
+}
+function openEditor(d,b){
+ selected=key(d);opener=b;armed=false;const h=holidays(d.getFullYear()).has(selected);
+ $('editDate').textContent=`${d.getMonth()+1}月${d.getDate()}日(${weekdays[d.getDay()]}${h?'・祝':''})`;
+ $('entry').value=records[selected]||'';$('error').textContent='';$('remove').hidden=!records[selected];$('remove').textContent='削除';
+ $('editor').showModal();$('entry').focus();
+}
+function closeEditor(){ $('editor').close(); }
+$('editor').addEventListener('close',()=>{
+ const container=mobile.matches&&document.body.dataset.view==='list'?$('list'):$('calendar');
+ (container.querySelector(`[data-date="${selected}"]`)||opener)?.focus({preventScroll:true});
+});
+$('close').onclick=closeEditor;
+$('entry').oninput=()=>{armed=false;$('remove').textContent='削除';$('error').textContent='';};
+$('form').onsubmit=e=>{
+ e.preventDefault();const items=lines($('entry').value);
+ if(!items.length){$('error').textContent='練習内容を入力してください。';$('entry').focus();return;}
+ records[selected]=items.map(s=>'・'+s).join('\n');persist();render();closeEditor();
+};
+$('remove').onclick=()=>{
+ if(!armed){armed=true;$('remove').textContent='もう一度押して削除';return;}
+ delete records[selected];persist();render();closeEditor();
+};
+function move(n){shown=new Date(shown.getFullYear(),shown.getMonth()+n,1,12);render(true);}
+$('prev').onclick=()=>move(-1);$('next').onclick=()=>move(1);
+$('today').onclick=()=>{const d=new Date();shown=new Date(Math.max(1980,Math.min(2099,d.getFullYear())),d.getMonth(),1,12);render(true);};
+function view(name){document.body.dataset.view=name;$('monthly').setAttribute('aria-pressed',name==='month');$('listing').setAttribute('aria-pressed',name==='list');scrollToday();}
+$('monthly').onclick=()=>view('month');$('listing').onclick=()=>view('list');mobile.addEventListener('change',scrollToday);
+render(true);
+</script>
+</body>
+</html>

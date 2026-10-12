@@ -1,0 +1,13 @@
+{
+  "name": "piano-practice-calendar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "外部ライブラリを使わない1ファイルのピアノ練習記録",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node scripts/check.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -14,15 +14,17 @@ header{background:var(--bg);z-index:2;padding:24px 16px 16px} .toolbar{max-width
 ul{list-style:none;margin:12px 0 0;padding:0;font-size:14px;line-height:1.65}li{display:flex;align-items:flex-start;gap:3px}li+li{margin-top:7px}.bullet{flex:0 0 auto}.words{min-width:0;white-space:pre-wrap;word-break:auto-phrase;line-break:strict;overflow-wrap:break-word;text-wrap:pretty}.dot{display:none}.list{display:none}#notice{max-width:1160px;margin:0 auto;padding:0 16px;font-size:13px;color:var(--red)}#notice:empty{display:none}
 /* ダイアログはキーボードでも操作できる */
 dialog{width:min(520px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--panel);color:var(--ink)}dialog::backdrop{background:#11182b66}h2{font-size:20px;margin:0 0 24px}label{display:block;margin-bottom:8px}textarea{display:block;resize:vertical;width:100%;min-height:190px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}#save{background:var(--accent);color:#fff;border-color:var(--accent)}#remove{color:var(--red);margin-right:auto}#error{font-size:14px;color:var(--red);margin:10px 0 0}#error:empty{display:none}
+.task-colors{margin-top:16px}.task-color-row{margin-top:16px;min-width:0}.task-color-name{display:block;margin-bottom:6px;overflow-wrap:anywhere;white-space:pre-wrap}.color-palette{display:flex;flex-wrap:wrap;gap:6px}.color-choice{position:relative;display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;min-height:44px;padding:0;border:2px solid transparent;border-radius:10px;background:var(--panel)}.color-choice:hover{background:var(--soft)}.color-swatch{display:block;width:26px;height:26px;border-radius:50%;background:var(--swatch);border:1px solid #ffffff55}.color-choice[aria-pressed="true"]{border-color:var(--ink);background:var(--soft)}.color-choice[aria-pressed="true"] .color-swatch::after{content:"✓";display:block;text-align:center;line-height:24px;color:#fff;font-size:18px;font-weight:700;text-shadow:0 1px 2px #000}.task-color-help{font-size:13px;margin:8px 0;color:var(--ink)}li[data-colored="true"]{border-left:3px solid var(--task-color);padding-left:6px}.bullet{color:var(--task-color,currentColor)}
+@media(min-width:600px){header{padding:clamp(20px,2vw,36px) clamp(16px,2vw,48px) 16px}.toolbar,main,#notice{max-width:none}main{padding:0 clamp(16px,2vw,48px) 24px}#notice{padding:0 clamp(16px,2vw,48px)}.day,.blank{min-height:clamp(112px,9vw,240px);padding:clamp(12px,1vw,24px) clamp(10px,.8vw,20px)}.date{font-size:clamp(15px,.9vw,20px)}.calendar ul{font-size:clamp(14px,.85vw,19px);margin-top:clamp(12px,1vw,24px)}.calendar li+li{margin-top:clamp(7px,.6vw,14px)}.calendar .words{overflow-wrap:anywhere}}
 @media(prefers-color-scheme:dark){:root{--bg:#151822;--panel:#1d2230;--ink:#e5e7ef;--line:#363d50;--soft:#232939;--red:#e18486;--blue:#8bb3e2}button{color:#bcc8ff}}
-@media(max-width:599px){header{position:sticky;top:0;padding:calc(10px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 10px max(12px,env(safe-area-inset-left));border-bottom:1px solid var(--line)}h1{font-size:21px}.toolbar{gap:6px}.toolbar button{padding:8px 10px}.switch{display:flex;gap:8px;margin-top:12px}.switch button{flex:1}.switch [aria-pressed="true"]{background:var(--accent);color:#fff}main{padding:12px max(12px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}body[data-view="list"] .calendar{display:none}body[data-view="list"] .list{display:block}.list .day{width:100%;min-height:72px;flex-direction:row;gap:16px;border:0;border-bottom:1px solid var(--line);padding:16px 10px;scroll-margin-top:155px}.list .date{min-width:90px}.list ul{margin:2px 0 0;flex:1}.calendar .day,.calendar .blank{min-height:68px;padding:10px}.calendar ul{display:none}.dot{display:block;width:5px;height:5px;border-radius:50%;background:var(--accent);margin:6px 0 0 8px}dialog{margin:auto 0 0;width:100%;max-width:none;max-height:85dvh;border-radius:20px 20px 0 0;padding:24px max(20px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left))}}
+@media(max-width:599px){header{position:sticky;top:0;padding:calc(10px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 10px max(12px,env(safe-area-inset-left));border-bottom:1px solid var(--line)}h1{font-size:21px}.toolbar{gap:6px}.toolbar button{padding:8px 10px}.switch{display:flex;gap:8px;margin-top:12px}.switch button{flex:1}.switch [aria-pressed="true"]{background:var(--accent);color:#fff}main{padding:12px max(12px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}body[data-view="list"] .calendar{display:none}body[data-view="list"] .list{display:block}.list .day{width:100%;min-height:72px;flex-direction:row;gap:16px;border:0;border-bottom:1px solid var(--line);padding:16px 10px;scroll-margin-top:155px}.list .date{min-width:90px}.list ul{margin:2px 0 0;flex:1;min-width:0}.calendar .day,.calendar .blank{min-height:68px;padding:10px}.calendar ul{display:none}.dot{display:block;width:5px;height:5px;border-radius:50%;background:var(--accent);margin:6px 0 0 8px}dialog{margin:auto 0 0;width:100%;max-width:none;max-height:85dvh;border-radius:20px 20px 0 0;padding:24px max(20px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left))}}
 </style>
 </head>
 <body data-view="list">
 <header><div class="toolbar"><h1 id="month"></h1><button id="today">今日</button><button id="prev" aria-label="前の月">前の月</button><button id="next" aria-label="次の月">次の月</button></div><div class="switch"><button id="monthly" aria-pressed="false">月間</button><button id="listing" aria-pressed="true">リスト</button></div></header>
 <p id="notice" role="status"></p>
 <main><div id="calendar" class="calendar" aria-label="月間カレンダー"></div><div id="list" class="list" aria-label="日ごとの練習記録"></div></main>
-<dialog id="editor" aria-labelledby="editDate"><form id="form"><h2 id="editDate"></h2><label for="entry">予定</label><textarea id="entry"></textarea><p id="error" role="alert"></p><div class="actions"><button type="button" id="remove" hidden>削除</button><button type="submit" id="save">保存する</button><button type="button" id="close">閉じる</button></div></form></dialog>
+<dialog id="editor" aria-labelledby="editDate"><form id="form"><h2 id="editDate"></h2><label for="entry">予定</label><textarea id="entry"></textarea><div id="taskColors" class="task-colors" aria-label="タスクの色"></div><p id="error" role="alert"></p><div class="actions"><button type="button" id="remove" hidden>削除</button><button type="submit" id="save">保存する</button><button type="button" id="close">閉じる</button></div></form></dialog>
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
@@ -87,6 +89,43 @@ try{
   records=Object.fromEntries(Object.entries(saved.records).filter(([k,v])=>/^\d{4}-\d{2}-\d{2}$/.test(k)&&typeof v==='string'));
  }
 }catch{ $('notice').textContent='保存データを読み込めません。この画面内で記録できます。'; }
+// 練習記録の保存形式を変えず、タスク名ごとの色を別に保存する。
+const colorStorageKey='piano-practice-task-colors-v1';
+const palette=[['','標準'],['#3a6ea8','青'],['#267c72','緑'],['#90602c','オレンジ'],['#c0494b','赤'],['#a3457c','ピンク'],['#7356ad','紫'],['#6b7180','グレー']];
+let taskColors=Object.create(null),draftColors=Object.create(null),colorReadable=true;
+try{
+ const raw=localStorage.getItem(colorStorageKey);
+ if(raw!==null){
+  const saved=JSON.parse(raw);
+  if(!saved||typeof saved!=='object'||Array.isArray(saved))throw Error('invalid');
+  for(const [name,color] of Object.entries(saved))if(palette.some(([value])=>value===color)&&color)taskColors[name]=color;
+ }
+}catch{colorReadable=false;$('notice').textContent='色設定を読み込めません。保存済みの色設定は上書きしません。';}
+function persistColors(){
+ if(!colorReadable){$('notice').textContent='色設定を読み込めません。保存済みの色設定は上書きしません。';return;}
+ try{localStorage.setItem(colorStorageKey,JSON.stringify(taskColors));}
+ catch{$('notice').textContent='色設定を保存できません。色はこの画面を閉じるまで保持します。';}
+}
+function renderColorEditor(){
+ const container=$('taskColors');container.replaceChildren();
+ const names=[...new Set(lines($('entry').value))];if(!names.length)return;
+ const help=document.createElement('p');help.className='task-color-help';help.textContent='タスクの色（同じ名前のタスクに反映されます）';container.append(help);
+ names.forEach((name,index)=>{
+  const row=document.createElement('div'),label=document.createElement('span'),group=document.createElement('div');
+  row.className='task-color-row';label.className='task-color-name';label.textContent=name;label.id='task-color-'+index;
+  group.className='color-palette';group.setAttribute('role','group');group.setAttribute('aria-labelledby',label.id);
+  const selectedColor=Object.hasOwn(draftColors,name)?draftColors[name]:(taskColors[name]||'');
+  for(const [value,title] of palette){
+   const button=document.createElement('button'),swatch=document.createElement('span');
+   button.type='button';button.className='color-choice';button.setAttribute('aria-label',title==='標準'?'標準の色':title);button.title=title;
+   button.setAttribute('aria-pressed',value===selectedColor?'true':'false');button.dataset.color=value;
+   swatch.className='color-swatch';swatch.setAttribute('aria-hidden','true');swatch.style.setProperty('--swatch',value||'var(--accent)');button.append(swatch);
+   button.onclick=()=>{draftColors[name]=value;for(const choice of group.children)choice.setAttribute('aria-pressed',choice===button?'true':'false');};
+   group.append(button);
+  }
+  row.append(label,group);container.append(row);
+ });
+}
 const now=new Date();
 let shown=new Date(Math.max(1980,Math.min(2099,now.getFullYear())),now.getMonth(),1,12);
 let selected='',opener=null,armed=false;
@@ -97,6 +136,7 @@ function contents(text){
  for(const line of lines(text)){
   const li=document.createElement('li'),bullet=document.createElement('span'),words=document.createElement('span');
   bullet.className='bullet';bullet.textContent='・';words.className='words';words.textContent=line;
+  li.style.setProperty('--task-color',taskColors[line]||'var(--accent)');li.dataset.colored='true';
   li.append(bullet,words);ul.append(li);
  }return ul;
 }
@@ -107,7 +147,7 @@ function dayButton(d,isList){
  const number=document.createElement('span');number.className='date '+(holiday?'holiday':d.getDay()===0?'sun':d.getDay()===6?'sat':'');
  number.textContent=isList?`${d.getDate()}日(${weekdays[d.getDay()]}${holiday?'・祝':''})`:d.getDate();
  b.append(number);const text=records[date]||'';
- if(lines(text).length){b.append(contents(text));if(!isList){const dot=document.createElement('span');dot.className='dot';b.append(dot);}}
+ if(lines(text).length){b.append(contents(text));if(!isList){const dot=document.createElement('span');dot.className='dot';const colors=[...new Set(lines(text).map(name=>taskColors[name]||'var(--accent)'))];dot.style.background=colors.length===1?colors[0]:`linear-gradient(90deg,${colors.map((color,i)=>`${color} ${i*100/colors.length}% ${(i+1)*100/colors.length}%`).join(',')})`;b.append(dot);}}
  b.setAttribute('aria-label',`${d.getMonth()+1}月${d.getDate()}日 ${weekdays[d.getDay()]}曜日${holiday?' '+holiday:''}${text?' '+lines(text).join('、'):' 記録なし'}`);
  b.addEventListener('click',()=>openEditor(d,b));return b;
 }
@@ -130,10 +170,10 @@ function render(scroll=false){
  }if(scroll)scrollToday();
 }
 function openEditor(d,b){
- selected=key(d);opener=b;armed=false;const h=holidays(d.getFullYear()).has(selected);
+ selected=key(d);opener=b;armed=false;draftColors=Object.create(null);const h=holidays(d.getFullYear()).has(selected);
  $('editDate').textContent=`${d.getMonth()+1}月${d.getDate()}日(${weekdays[d.getDay()]}${h?'・祝':''})`;
  $('entry').value=records[selected]||'';$('error').textContent='';$('remove').hidden=!records[selected];$('remove').textContent='削除';
- $('editor').showModal();$('entry').focus();
+ renderColorEditor();$('editor').showModal();$('entry').focus();
 }
 function closeEditor(){ $('editor').close(); }
 $('editor').addEventListener('close',()=>{
@@ -141,11 +181,13 @@ $('editor').addEventListener('close',()=>{
  (container.querySelector(`[data-date="${selected}"]`)||opener)?.focus({preventScroll:true});
 });
 $('close').onclick=closeEditor;
-$('entry').oninput=()=>{armed=false;$('remove').textContent='削除';$('error').textContent='';};
+$('entry').oninput=()=>{renderColorEditor();armed=false;$('remove').textContent='削除';$('error').textContent='';};
 $('form').onsubmit=e=>{
  e.preventDefault();const items=lines($('entry').value);
  if(!items.length){$('error').textContent='練習内容を入力してください。';$('entry').focus();return;}
- records[selected]=items.map(s=>'・'+s).join('\n');persist();render();closeEditor();
+ if($('entry').value!==records[selected]){records[selected]=items.map(s=>'・'+s).join('\n');persist();}
+ for(const name of items)if(Object.hasOwn(draftColors,name)){if(draftColors[name])taskColors[name]=draftColors[name];else delete taskColors[name];}
+ if(items.some(name=>Object.hasOwn(draftColors,name)))persistColors();render();closeEditor();
 };
 $('remove').onclick=()=>{
  if(!armed){armed=true;$('remove').textContent='もう一度押して削除';return;}

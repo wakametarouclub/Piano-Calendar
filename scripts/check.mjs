@@ -10,6 +10,7 @@ class Element {
  setAttribute(k,v){this.attrs[k]=v}
  addEventListener(k,fn){this[k]=fn}
  querySelector(){return null}
+ setSelectionRange(start,end){this.selectionStart=start;this.selectionEnd=end}
  focus(){}
  showModal(){this.open=true}
  close(){this.open=false}
@@ -30,23 +31,35 @@ const store={'piano-practice-v1':original};
 let app=boot(store);assert.equal(store['piano-practice-v1'],original);assert.equal(app.writes.length,0);
 app.run("openEditor(new Date(2026,9,1,12),null)");
 assert.equal(app.ids.taskColors.children.length,3);
-choose(app,'#7356ad');
+choose(app,'#FC6C85');
 app.ids.form.onsubmit({preventDefault(){}});
-assert.equal(JSON.parse(store['piano-practice-task-colors-v1'])['ハノン'],'#7356ad');
+assert.equal(JSON.parse(store['piano-practice-task-colors-v1'])['ハノン'],'#FC6C85');
 assert.equal(store['piano-practice-v1'],original);
-assert.equal(app.run("contents(records['2026-10-02']).children[0].style['--task-color']"),'#7356ad');
-app=boot(store);assert.equal(app.run("taskColors['ハノン']"),'#7356ad');assert.equal(store['piano-practice-v1'],original);
+assert.equal(app.run("contents(records['2026-10-02']).children[0].style['--task-color']"),'#FC6C85');
+app=boot(store);assert.equal(app.run("taskColors['ハノン']"),'#FC6C85');assert.equal(store['piano-practice-v1'],original);
 app.run("openEditor(new Date(2026,9,1,12),null)");
-assert.equal(app.ids.taskColors.children[1].children[1].children.find(b=>b.dataset.color==='#7356ad').attrs['aria-pressed'],'true');
-choose(app,'#267c72');app.ids.close.onclick();
-assert.equal(JSON.parse(store['piano-practice-task-colors-v1'])['ハノン'],'#7356ad');
+assert.equal(app.ids.taskColors.children[1].children[1].children.find(b=>b.dataset.color==='#FC6C85').attrs['aria-pressed'],'true');
+choose(app,'#B2D235');app.ids.close.onclick();
+assert.equal(JSON.parse(store['piano-practice-task-colors-v1'])['ハノン'],'#FC6C85');
 app.run("openEditor(new Date(2026,9,3,12),null)");app.ids.entry.value='新規タスク';app.ids.entry.oninput();
-choose(app,'#c0494b');app.ids.form.onsubmit({preventDefault(){}});
-assert.equal(JSON.parse(store['piano-practice-v1']).records['2026-10-03'],'・新規タスク');
-assert.equal(JSON.parse(store['piano-practice-task-colors-v1'])['新規タスク'],'#c0494b');
+choose(app,'#343A46');app.ids.form.onsubmit({preventDefault(){}});
+assert.equal(JSON.parse(store['piano-practice-v1']).records['2026-10-03'],'新規タスク');
+assert.equal(JSON.parse(store['piano-practice-task-colors-v1'])['新規タスク'],'#343A46');
 app.run("openEditor(new Date(2026,9,3,12),null)");app.ids.remove.onclick();assert.ok(JSON.parse(store['piano-practice-v1']).records['2026-10-03']);app.ids.remove.onclick();assert.equal(JSON.parse(store['piano-practice-v1']).records['2026-10-03'],undefined);
 app.run("view('month')");assert.equal(app.run('document.body.dataset.view'),'month');app.run("view('list')");assert.equal(app.run('document.body.dataset.view'),'list');
-const invalid={'piano-practice-v1':original,'piano-practice-task-colors-v1':'broken'};app=boot(invalid);app.run("openEditor(new Date(2026,9,1,12),null)");choose(app,'#3a6ea8');app.ids.form.onsubmit({preventDefault(){}});assert.equal(invalid['piano-practice-task-colors-v1'],'broken');assert.equal(invalid['piano-practice-v1'],original);
+const invalid={'piano-practice-v1':original,'piano-practice-task-colors-v1':'broken'};app=boot(invalid);app.run("openEditor(new Date(2026,9,1,12),null)");choose(app,'#3974B5');app.ids.form.onsubmit({preventDefault(){}});assert.equal(invalid['piano-practice-task-colors-v1'],'broken');assert.equal(invalid['piano-practice-v1'],original);
 const unformatted=JSON.stringify({initialized:true,records:{'2026-10-01':'  ハノン  \nジャズフレーズ'}});
-const preserved={'piano-practice-v1':unformatted};app=boot(preserved);app.run("openEditor(new Date(2026,9,1,12),null)");choose(app,'#3a6ea8');app.ids.form.onsubmit({preventDefault(){}});assert.equal(preserved['piano-practice-v1'],unformatted);
+const preserved={'piano-practice-v1':unformatted};app=boot(preserved);app.run("openEditor(new Date(2026,9,1,12),null)");choose(app,'#3974B5');app.ids.form.onsubmit({preventDefault(){}});assert.equal(preserved['piano-practice-v1'],unformatted);
+const legacyColors=JSON.stringify({'ハノン':'#7356ad','ジャズフレーズ':'#267c72','unused':'#3a6ea8'});
+const legacy={'piano-practice-v1':original,'piano-practice-task-colors-v1':legacyColors};app=boot(legacy);
+app.run("openEditor(new Date(2026,9,1,12),null)");assert.equal(app.ids.entry.value,'ハノン\nジャズフレーズ');
+assert.equal(app.ids.taskColors.children[1].children[1].children.length,4);
+assert.deepEqual(app.ids.taskColors.children[1].children[1].children.map(b=>b.dataset.color),['#343A46','#B2D235','#FC6C85','#3974B5']);
+app.ids.form.onsubmit({preventDefault(){}});assert.equal(legacy['piano-practice-v1'],original);assert.equal(legacy['piano-practice-task-colors-v1'],legacyColors);
+app.run("openEditor(new Date(2026,9,1,12),null)");choose(app,'#B2D235');app.ids.form.onsubmit({preventDefault(){}});
+assert.equal(JSON.parse(legacy['piano-practice-task-colors-v1'])['ジャズフレーズ'],'#267c72');assert.equal(JSON.parse(legacy['piano-practice-task-colors-v1']).unused,'#3a6ea8');
+app.run("openEditor(new Date(2026,9,3,12),null)");app.ids.entry.value='ハノン\n\n・耳コピ';app.ids.entry.oninput();
+assert.equal(app.ids.entry.value,'ハノン\n\n耳コピ');assert.deepEqual(app.ids.entryMirror.children.map(e=>e.dataset.task),['true','false','true']);
+app.ids.form.onsubmit({preventDefault(){}});assert.equal(JSON.parse(legacy['piano-practice-v1']).records['2026-10-03'],'ハノン\n耳コピ');
+assert.equal(app.run("contents(records['2026-10-03']).children[0].children[1].textContent"),'ハノン');
 console.log('PASS: existing records preserved; new/edit/cancel/delete; shared task colors; reload persistence; mobile view switch; invalid colors protected.');

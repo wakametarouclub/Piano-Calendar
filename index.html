@@ -13,7 +13,7 @@ header{background:var(--bg);z-index:2;padding:24px 16px 16px} .toolbar{max-width
 .day,.blank{min-height:112px;border:0;border-radius:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 10px;background:var(--panel)}.day{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;text-align:left;color:var(--ink)}.blank{background:var(--soft)}.date{position:relative;display:block;align-self:flex-start;isolation:isolate;min-width:30px;height:30px;line-height:30px;text-align:left;font-size:15px;font-variant-numeric:tabular-nums}.today .date{color:white}.today .date:before{content:"";position:absolute;z-index:-1;left:-6px;top:0;width:30px;height:30px;border-radius:50%;background:var(--accent)}.sun,.holiday{color:var(--red)}.sat{color:var(--blue)}
 ul{list-style:none;margin:12px 0 0;padding:0;font-size:14px;line-height:1.65}li{display:flex;align-items:flex-start;gap:3px}li+li{margin-top:7px}.bullet{flex:0 0 auto}.words{min-width:0;white-space:pre-wrap;word-break:auto-phrase;line-break:strict;overflow-wrap:break-word;text-wrap:pretty}.dot{display:none}.list{display:none}#notice{max-width:1160px;margin:0 auto;padding:0 16px;font-size:13px;color:var(--red)}#notice:empty{display:none}
 /* ダイアログはキーボードでも操作できる */
-dialog{width:min(520px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--panel);color:var(--ink)}dialog::backdrop{background:#11182b66}h2{font-size:20px;margin:0 0 24px}label{display:block;margin-bottom:8px}textarea{display:block;resize:vertical;width:100%;min-height:190px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}#save{background:var(--accent);color:#fff;border-color:var(--accent)}#remove{color:var(--red);margin-right:auto}#error{font-size:14px;color:var(--red);margin:10px 0 0}#error:empty{display:none}
+dialog{width:min(520px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--panel);color:var(--ink)}dialog::backdrop{background:#11182b66}h2{font-size:20px;margin:0 0 24px}label{display:block;margin-bottom:8px}textarea{display:block;resize:vertical;width:100%;min-height:190px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}.entry-field{position:relative;background:var(--bg);border-radius:10px}.entry-field textarea{padding-left:32px;background:transparent;position:relative;z-index:1}.entry-markers{position:absolute;left:1px;top:1px;overflow:hidden;pointer-events:none;color:transparent;font-size:16px;line-height:1.7}.entry-mirror{padding:12px 12px 12px 32px;white-space:pre-wrap;overflow-wrap:break-word;tab-size:8}.entry-line{position:relative;min-height:1.7em}.entry-line[data-task="true"]::before{content:"・";position:absolute;left:-20px;color:var(--ink)}.legacy-color{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:13px}.legacy-color .color-swatch{width:16px;height:16px}.color-choice[data-color="#B2D235"][aria-pressed="true"] .color-swatch::after{color:#343A46;text-shadow:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}#save{background:var(--accent);color:#fff;border-color:var(--accent)}#remove{color:var(--red);margin-right:auto}#error{font-size:14px;color:var(--red);margin:10px 0 0}#error:empty{display:none}
 .task-colors{margin-top:16px}.task-color-row{margin-top:16px;min-width:0}.task-color-name{display:block;margin-bottom:6px;overflow-wrap:anywhere;white-space:pre-wrap}.color-palette{display:flex;flex-wrap:wrap;gap:6px}.color-choice{position:relative;display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;min-height:44px;padding:0;border:2px solid transparent;border-radius:10px;background:var(--panel)}.color-choice:hover{background:var(--soft)}.color-swatch{display:block;width:26px;height:26px;border-radius:50%;background:var(--swatch);border:1px solid #ffffff55}.color-choice[aria-pressed="true"]{border-color:var(--ink);background:var(--soft)}.color-choice[aria-pressed="true"] .color-swatch::after{content:"✓";display:block;text-align:center;line-height:24px;color:#fff;font-size:18px;font-weight:700;text-shadow:0 1px 2px #000}.task-color-help{font-size:13px;margin:8px 0;color:var(--ink)}li[data-colored="true"]{border-left:3px solid var(--task-color);padding-left:6px}.bullet{color:var(--task-color,currentColor)}
 @media(min-width:600px){header{padding:clamp(20px,2vw,36px) clamp(16px,2vw,48px) 16px}.toolbar,main,#notice{max-width:none}main{padding:0 clamp(16px,2vw,48px) 24px}#notice{padding:0 clamp(16px,2vw,48px)}.day,.blank{min-height:clamp(112px,9vw,240px);padding:clamp(12px,1vw,24px) clamp(10px,.8vw,20px)}.date{font-size:clamp(15px,.9vw,20px)}.calendar ul{font-size:clamp(14px,.85vw,19px);margin-top:clamp(12px,1vw,24px)}.calendar li+li{margin-top:clamp(7px,.6vw,14px)}.calendar .words{overflow-wrap:anywhere}}
 @media(prefers-color-scheme:dark){:root{--bg:#151822;--panel:#1d2230;--ink:#e5e7ef;--line:#363d50;--soft:#232939;--red:#e18486;--blue:#8bb3e2}button{color:#bcc8ff}}
@@ -24,7 +24,7 @@ dialog{width:min(520px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:
 <header><div class="toolbar"><h1 id="month"></h1><button id="today">今日</button><button id="prev" aria-label="前の月">前の月</button><button id="next" aria-label="次の月">次の月</button></div><div class="switch"><button id="monthly" aria-pressed="false">月間</button><button id="listing" aria-pressed="true">リスト</button></div></header>
 <p id="notice" role="status"></p>
 <main><div id="calendar" class="calendar" aria-label="月間カレンダー"></div><div id="list" class="list" aria-label="日ごとの練習記録"></div></main>
-<dialog id="editor" aria-labelledby="editDate"><form id="form"><h2 id="editDate"></h2><label for="entry">予定</label><textarea id="entry"></textarea><div id="taskColors" class="task-colors" aria-label="タスクの色"></div><p id="error" role="alert"></p><div class="actions"><button type="button" id="remove" hidden>削除</button><button type="submit" id="save">保存する</button><button type="button" id="close">閉じる</button></div></form></dialog>
+<dialog id="editor" aria-labelledby="editDate"><form id="form"><h2 id="editDate"></h2><label for="entry">予定</label><div class="entry-field"><div id="entryMarkers" class="entry-markers" aria-hidden="true"><div id="entryMirror" class="entry-mirror"></div></div><textarea id="entry"></textarea></div><div id="taskColors" class="task-colors" aria-label="タスクの色"></div><p id="error" role="alert"></p><div class="actions"><button type="button" id="remove" hidden>削除</button><button type="submit" id="save">保存する</button><button type="button" id="close">閉じる</button></div></form></dialog>
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
@@ -91,14 +91,14 @@ try{
 }catch{ $('notice').textContent='保存データを読み込めません。この画面内で記録できます。'; }
 // 練習記録の保存形式を変えず、タスク名ごとの色を別に保存する。
 const colorStorageKey='piano-practice-task-colors-v1';
-const palette=[['','標準'],['#3a6ea8','青'],['#267c72','緑'],['#90602c','オレンジ'],['#c0494b','赤'],['#a3457c','ピンク'],['#7356ad','紫'],['#6b7180','グレー']];
+const palette=[['#343A46','黒'],['#B2D235','黄緑'],['#FC6C85','ピンク'],['#3974B5','青']];
 let taskColors=Object.create(null),draftColors=Object.create(null),colorReadable=true;
 try{
  const raw=localStorage.getItem(colorStorageKey);
  if(raw!==null){
   const saved=JSON.parse(raw);
   if(!saved||typeof saved!=='object'||Array.isArray(saved))throw Error('invalid');
-  for(const [name,color] of Object.entries(saved))if(palette.some(([value])=>value===color)&&color)taskColors[name]=color;
+  for(const [name,color] of Object.entries(saved))if(typeof color==='string'&&/^#[0-9a-f]{6}$/i.test(color))taskColors[name]=color;
  }
 }catch{colorReadable=false;$('notice').textContent='色設定を読み込めません。保存済みの色設定は上書きしません。';}
 function persistColors(){
@@ -117,20 +117,45 @@ function renderColorEditor(){
   const selectedColor=Object.hasOwn(draftColors,name)?draftColors[name]:(taskColors[name]||'');
   for(const [value,title] of palette){
    const button=document.createElement('button'),swatch=document.createElement('span');
-   button.type='button';button.className='color-choice';button.setAttribute('aria-label',title==='標準'?'標準の色':title);button.title=title;
+   button.type='button';button.className='color-choice';button.setAttribute('aria-label',title);button.title=title;
    button.setAttribute('aria-pressed',value===selectedColor?'true':'false');button.dataset.color=value;
    swatch.className='color-swatch';swatch.setAttribute('aria-hidden','true');swatch.style.setProperty('--swatch',value||'var(--accent)');button.append(swatch);
-   button.onclick=()=>{draftColors[name]=value;for(const choice of group.children)choice.setAttribute('aria-pressed',choice===button?'true':'false');};
+   button.onclick=()=>{draftColors[name]=value;for(const choice of group.children)choice.setAttribute('aria-pressed',choice===button?'true':'false');row.querySelector('.legacy-color')?.remove();};
    group.append(button);
   }
-  row.append(label,group);container.append(row);
+  row.append(label,group);
+  if(!palette.some(([value])=>value===selectedColor)){
+   const current=document.createElement('span'),swatch=document.createElement('span');current.className='legacy-color';swatch.className='color-swatch';swatch.style.setProperty('--swatch',selectedColor||'var(--accent)');swatch.setAttribute('aria-hidden','true');current.append(swatch);const caption=document.createElement('span');caption.textContent='現在の色を維持';current.append(caption);row.append(current);
+  }
+  container.append(row);
  });
 }
 const now=new Date();
 let shown=new Date(Math.max(1980,Math.min(2099,now.getFullYear())),now.getMonth(),1,12);
-let selected='',opener=null,armed=false;
+let selected='',opener=null,armed=false,originalEntry='';
 const mobile=matchMedia('(max-width:599px)');
 function lines(text){return text.split(/\r?\n/).map(s=>s.trim().replace(/^・\s*/, '')).filter(Boolean);}
+// 記号は入力値から分離し、同じ折り返し幅の表示層に付ける。
+function entryText(text){return text.split(/\r?\n/).map(line=>line.replace(/^(\s*)・\s*/, '$1')).join('\n');}
+function syncEntryMarkers(){
+ const entry=$('entry');$('entryMarkers').style.width=entry.clientWidth+'px';$('entryMarkers').style.height=entry.clientHeight+'px';$('entryMarkers').scrollTop=entry.scrollTop;$('entryMarkers').scrollLeft=entry.scrollLeft;
+}
+function renderEntryMarkers(){
+ const mirror=$('entryMirror');mirror.replaceChildren();
+ for(const text of $('entry').value.split('\n')){const line=document.createElement('div');line.className='entry-line';line.dataset.task=String(Boolean(text.trim()));line.textContent=text||'\u200b';mirror.append(line);}
+ syncEntryMarkers();
+}
+function updateEntry(event){
+ const entry=$('entry');
+ if(!event?.isComposing){
+  const value=entry.value,start=entry.selectionStart,end=entry.selectionEnd,normalized=entryText(value);
+  if(normalized!==value){entry.value=normalized;entry.setSelectionRange(entryText(value.slice(0,start)).length,entryText(value.slice(0,end)).length);}
+ }
+ renderEntryMarkers();renderColorEditor();armed=false;$('remove').textContent='削除';$('error').textContent='';
+}
+$('entry').addEventListener('scroll',syncEntryMarkers);
+$('entry').addEventListener('compositionend',()=>updateEntry());
+if(typeof ResizeObserver!=='undefined')new ResizeObserver(syncEntryMarkers).observe($('entry'));
 function contents(text){
  const ul=document.createElement('ul');
  for(const line of lines(text)){
@@ -172,8 +197,8 @@ function render(scroll=false){
 function openEditor(d,b){
  selected=key(d);opener=b;armed=false;draftColors=Object.create(null);const h=holidays(d.getFullYear()).has(selected);
  $('editDate').textContent=`${d.getMonth()+1}月${d.getDate()}日(${weekdays[d.getDay()]}${h?'・祝':''})`;
- $('entry').value=records[selected]||'';$('error').textContent='';$('remove').hidden=!records[selected];$('remove').textContent='削除';
- renderColorEditor();$('editor').showModal();$('entry').focus();
+ originalEntry=entryText(records[selected]||'');$('entry').value=originalEntry;$('error').textContent='';$('remove').hidden=!records[selected];$('remove').textContent='削除';
+ renderColorEditor();$('editor').showModal();renderEntryMarkers();$('entry').focus();
 }
 function closeEditor(){ $('editor').close(); }
 $('editor').addEventListener('close',()=>{
@@ -181,11 +206,11 @@ $('editor').addEventListener('close',()=>{
  (container.querySelector(`[data-date="${selected}"]`)||opener)?.focus({preventScroll:true});
 });
 $('close').onclick=closeEditor;
-$('entry').oninput=()=>{renderColorEditor();armed=false;$('remove').textContent='削除';$('error').textContent='';};
+$('entry').oninput=updateEntry;
 $('form').onsubmit=e=>{
  e.preventDefault();const items=lines($('entry').value);
  if(!items.length){$('error').textContent='練習内容を入力してください。';$('entry').focus();return;}
- if($('entry').value!==records[selected]){records[selected]=items.map(s=>'・'+s).join('\n');persist();}
+ if($('entry').value!==originalEntry){records[selected]=items.join('\n');persist();}
  for(const name of items)if(Object.hasOwn(draftColors,name)){if(draftColors[name])taskColors[name]=draftColors[name];else delete taskColors[name];}
  if(items.some(name=>Object.hasOwn(draftColors,name)))persistColors();render();closeEditor();
 };
